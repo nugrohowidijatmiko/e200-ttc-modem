@@ -1,0 +1,8 @@
+# /etc/systemd/network/10-eth0.network  (antSDR E200, PYNQ)
+# DHCP when a router is present + fixed 192.168.2.99 for a direct laptop link
+[Match]
+Name=eth0
+
+[Network]
+DHCP=ipv4
+Address=192.168.2.99/24

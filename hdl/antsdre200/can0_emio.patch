@@ -1,0 +1,74 @@
+--- a/projects/antsdre200/system_bd.tcl
++++ b/projects/antsdre200/system_bd.tcl
+@@ -83,6 +83,10 @@
+ ad_ip_parameter sys_ps7 CONFIG.PCW_SPI0_SPI0_IO EMIO
+ ad_ip_parameter sys_ps7 CONFIG.PCW_SPI1_PERIPHERAL_ENABLE 1
+ ad_ip_parameter sys_ps7 CONFIG.PCW_SPI1_SPI1_IO EMIO
++# CAN0 via EMIO (ke header J30)
++ad_ip_parameter sys_ps7 CONFIG.PCW_CAN0_PERIPHERAL_ENABLE 1
++ad_ip_parameter sys_ps7 CONFIG.PCW_CAN0_CAN0_IO EMIO
++ad_ip_parameter sys_ps7 CONFIG.PCW_CAN_PERIPHERAL_FREQMHZ 100
+ 
+ 
+ 
+@@ -156,6 +160,13 @@
+ ad_connect spi1_sdo_o sys_ps7/SPI1_MOSI_O
+ ad_connect spi1_sdi_i sys_ps7/SPI1_MISO_I
+ 
++# can0 connections
++
++create_bd_port -dir O can0_tx
++create_bd_port -dir I can0_rx
++ad_connect can0_tx sys_ps7/CAN0_PHY_TX
++ad_connect can0_rx sys_ps7/CAN0_PHY_RX
++
+ # system id
+ 
+ ad_ip_instance axi_sysid axi_sysid_0
+--- a/projects/antsdre200/system_top.v
++++ b/projects/antsdre200/system_top.v
+@@ -112,6 +112,10 @@
+   output wire             CLK_40M_DAC_DIN ,
+ 
+ 
++  // CAN0 (PS, via EMIO) ke header J30
++  output          can0_tx,
++  input           can0_rx,
++
+   output          tx_amp_en
+   );
+ 
+@@ -198,6 +202,8 @@
+     .RGMII_td(RGMII_td),
+     .RGMII_tx_ctl(RGMII_tx_ctl),
+     .RGMII_txc(RGMII_txc),
++    .can0_tx (can0_tx),
++    .can0_rx (can0_rx),
+     .ddr_addr (ddr_addr),
+     .ddr_ba (ddr_ba),
+     .ddr_cas_n (ddr_cas_n),
+--- a/projects/antsdre200/system.xdc
++++ b/projects/antsdre200/system.xdc
+@@ -2,10 +2,10 @@
+ set_property  -dict {PACKAGE_PIN  L19   IOSTANDARD LVCMOS18 PULLTYPE PULLUP} [get_ports iic_sda]           ; 
+ 
+ 
+-set_property -dict {PACKAGE_PIN V6 IOSTANDARD LVCMOS18} [get_ports CLK_40M_DAC_nSYNC]   ;
+-set_property -dict {PACKAGE_PIN W6 IOSTANDARD LVCMOS18} [get_ports CLK_40M_DAC_SCLK]    ;
+-set_property -dict {PACKAGE_PIN V10 IOSTANDARD LVCMOS18} [get_ports CLK_40M_DAC_DIN]    ;
+-set_property -dict {PACKAGE_PIN V11 IOSTANDARD LVCMOS18} [get_ports PPS_IN]             ;
++set_property -dict {PACKAGE_PIN V6 IOSTANDARD LVCMOS33} [get_ports CLK_40M_DAC_nSYNC]   ;
++set_property -dict {PACKAGE_PIN W6 IOSTANDARD LVCMOS33} [get_ports CLK_40M_DAC_SCLK]    ;
++set_property -dict {PACKAGE_PIN V10 IOSTANDARD LVCMOS33} [get_ports CLK_40M_DAC_DIN]    ;
++set_property -dict {PACKAGE_PIN V11 IOSTANDARD LVCMOS33} [get_ports PPS_IN]             ;
+ set_property -dict {PACKAGE_PIN K17 IOSTANDARD LVCMOS18} [get_ports CLK_40MHz_FPGA]     ;
+ set_property -dict {PACKAGE_PIN J18 IOSTANDARD LVCMOS18} [get_ports CLKIN_10MHz]        ;
+ set_property -dict {PACKAGE_PIN M20 IOSTANDARD LVCMOS18} [get_ports CLKIN_10MHz_REQ]    ;
+@@ -101,3 +101,7 @@
+ # clocks
+ 
+ create_clock -name rx_clk       -period  4 [get_ports rx_clk_in_p]
++
++# CAN0 (PS via EMIO) -> header J30, bank 13 (VCCO 3.3V)
++set_property -dict {PACKAGE_PIN V5 IOSTANDARD LVCMOS33} [get_ports can0_tx]
++set_property -dict {PACKAGE_PIN U7 IOSTANDARD LVCMOS33 PULLTYPE PULLUP} [get_ports can0_rx]
