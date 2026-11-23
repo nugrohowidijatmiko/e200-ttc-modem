@@ -1,4 +1,4 @@
-# antSDR E200 + PYNQ + CAN0 + AD9361
+# E200 TT&C Modem: Modem Satelit Berbasis antSDR, PYNQ, dan CSP over CAN
 
 **Bahasa Indonesia** · [English](#english)
 
