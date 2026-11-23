@@ -11,7 +11,7 @@ File pendukung untuk menjalankan **PYNQ Linux** di **antSDR E200** (Zynq-7020 + 
 
 Build dilakukan di **Windows + WSL2 Ubuntu 18.04** dengan Vivado/Vitis 2021.1, PetaLinux 2022.1, dan PYNQ v3.0.1 ([antsdr-pynq](https://github.com/MicroPhase/antsdr-pynq)).
 
-Tutorial lengkap langkah demi langkah: [`docs/tutorial_id.md`](docs/tutorial_id.md)
+Tutorial lengkap langkah demi langkah: [`docs/tutorial_id.md`](docs/tutorial_id.md) (Bahasa Indonesia) · [`docs/tutorial_en.md`](docs/tutorial_en.md) (English)
 
 ## Isi repo
 
@@ -59,7 +59,7 @@ Support files for running **PYNQ Linux** on the **antSDR E200** (Zynq-7020 + AD9
 
 Built on **Windows + WSL2 Ubuntu 18.04** with Vivado/Vitis 2021.1, PetaLinux 2022.1 and PYNQ v3.0.1 ([antsdr-pynq](https://github.com/MicroPhase/antsdr-pynq)).
 
-Full step-by-step tutorial (Indonesian): [`docs/tutorial_id.md`](docs/tutorial_id.md)
+Full step-by-step tutorial: [`docs/tutorial_en.md`](docs/tutorial_en.md) (English) · [`docs/tutorial_id.md`](docs/tutorial_id.md) (Bahasa Indonesia)
 
 ### Quick overview
 

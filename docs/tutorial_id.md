@@ -1,4 +1,6 @@
-# Tutorial antSDR E200: PYNQ + CAN0 + AD9361 di WSL (Hasil Praktik)
+# Tutorial antSDR E200 TT&C Modem: PYNQ + CAN0 + AD9361 di WSL (Hasil Praktik)
+
+**Bahasa Indonesia** · [English](tutorial_en.md)
 
 Nov 23, 2026 · @nugroho
 
