@@ -1,0 +1,12 @@
+# Large build outputs and binaries (keep them on external storage)
+*.img
+*.vhd
+*.bin
+*.BIN
+*.bit
+*.xsa
+*.dtbo
+*.tar.gz
+*.run
+__pycache__/
+*.pyc
